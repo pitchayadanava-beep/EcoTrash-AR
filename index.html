@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pick&PicTrash - เครื่องสแกนขยะอัจฉริยะ & เกม</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Athiti:wght@300;400;500;600;700&family=Chakra+Petch:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css?v=2.3">
+  <!-- TensorFlow.js and COCO-SSD Model -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <!-- Nature Green Glow Effects -->
+  <div class="glow-bg glow-1"></div>
+  <div class="glow-bg glow-2"></div>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- Top Sticky Navbar -->
+    <header class="navbar">
+      <div class="nav-brand">
+        <i data-lucide="leaf" class="brand-icon"></i>
+        <h1>Pick&<span class="brand-alt">PicTrash</span></h1>
+      </div>
+      
+      <!-- User Level Progress Card -->
+      <div class="user-stats-card">
+        <div class="user-profile">
+          <div class="avatar-ring">
+            <div class="avatar" id="user-avatar">🌱</div>
+          </div>
+          <div class="user-info">
+            <span class="username" id="nav-username">ผู้ตรวจการ BKK</span>
+            <span class="badge" id="nav-badge">Lv. 1 พลเมืองสะอาดกรุงเทพฯ</span>
+          </div>
+          <button id="btn-logout" class="btn-logout" title="ออกจากระบบ">
+            <i data-lucide="log-out"></i>
+          </button>
+        </div>
+        <div class="xp-progress-container">
+          <div class="xp-label">
+            <span id="current-xp">0</span> / <span id="next-level-xp">100</span> XP
+          </div>
+          <div class="xp-bar-outer">
+            <div class="xp-bar-inner" id="xp-fill" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="tab-bar">
+      <button class="tab-btn active" data-tab="scanner">
+        <i data-lucide="scan-line"></i>
+        <span>เครื่องสแกน AR</span>
+      </button>
+      <button class="tab-btn" data-tab="game">
+        <i data-lucide="gamepad-2"></i>
+        <span>เกมคัดแยกขยะ</span>
+      </button>
+      <button class="tab-btn" data-tab="leaderboard">
+        <i data-lucide="trophy"></i>
+        <span>ตารางคะแนน</span>
+      </button>
+    </nav>
+
+    <!-- Main View Screen -->
+    <main class="view-content">
+      
+      <!-- ==================== TAB 1: AR SCANNER ==================== -->
+      <section id="view-scanner" class="tab-view active">
+        <div class="scanner-card">
+          <!-- AR Camera Container -->
+          <div class="camera-wrapper">
+            <video id="webcam" autoplay playsinline muted></video>
+            <canvas id="detection-canvas"></canvas>
+            
+            <!-- AR HUD Brackets & Animations -->
+            <div class="ar-hud-overlay">
+              <div class="hud-corner top-left"></div>
+              <div class="hud-corner top-right"></div>
+              <div class="hud-corner bottom-left"></div>
+              <div class="hud-corner bottom-right"></div>
+              <div class="hud-scan-line"></div>
+              <div class="hud-reticle">
+                <div class="reticle-circle"></div>
+                <div class="reticle-dot"></div>
+              </div>
+              
+              <!-- Real-time HUD Status Info -->
+              <div class="hud-telemetry">
+                <div class="telemetry-row"><span class="label">ระบบ:</span> <span class="val green-text">Pick&PicTrash OS v2.1</span></div>
+                <div class="telemetry-row"><span class="label">กล้อง:</span> <span class="val" id="hud-cam-status">กำลังเชื่อมต่อ...</span></div>
+                <div class="telemetry-row"><span class="label">เอไอ:</span> <span class="val" id="hud-ai-status">กำลังเริ่มระบบ...</span></div>
+                <div class="telemetry-row"><span class="label">FPS:</span> <span class="val" id="hud-fps-status">00</span></div>
+              </div>
+            </div>
+            
+            <!-- Loading AI State Spinner -->
+            <div class="spinner-overlay" id="loading-overlay">
+              <div class="nature-spinner">
+                <div class="spinner-ring"></div>
+                <i data-lucide="brain-circuit" class="spinner-icon"></i>
+              </div>
+              <p>กำลังเตรียม Pick&Pic-AI...</p>
+              <span class="subtext">กำลังโหลดน้ำหนักโมเดลสำหรับตรวจจับวัตถุ (ประมาณ 5MB)</span>
+            </div>
+          </div>
+
+          <!-- Scanner Action Controls -->
+          <div class="scanner-controls">
+            <button class="btn btn-primary btn-icon" id="btn-toggle-cam">
+              <i data-lucide="camera-off"></i>
+              <span>เปิดกล้อง</span>
+            </button>
+            
+            <div class="divider">
+              <span>หรือใช้เครื่องจำลองขยะสำหรับอุปกรณ์ของคุณ</span>
+            </div>
+
+            <!-- Simulation Selector for easy testing without camera/trash -->
+            <div class="simulation-section">
+              <p class="section-title">เลือกตัวอย่างขยะเพื่อทดสอบสแกน:</p>
+              <div class="demo-grid">
+                <button class="demo-btn" data-type="plastic_bottle">
+                  <span class="demo-icon">🥤</span>
+                  <span>ขวดพลาสติก</span>
+                </button>
+                <button class="demo-btn" data-type="banana_peel">
+                  <span class="demo-icon">🍌</span>
+                  <span>เปลือกกล้วย</span>
+                </button>
+                <button class="demo-btn" data-type="battery">
+                  <span class="demo-icon">🔋</span>
+                  <span>แบตเตอรี่ใช้แล้ว</span>
+                </button>
+                <button class="demo-btn" data-type="chips_bag">
+                  <span class="demo-icon">🍿</span>
+                  <span>ถุงขยะทั่วไป</span>
+                </button>
+              </div>
+              
+              <div class="file-upload-wrapper">
+                <label for="image-upload" class="upload-label">
+                  <i data-lucide="upload"></i>
+                  <span>อัปโหลด & สแกนรูปภาพของคุณ</span>
+                </label>
+                <input type="file" id="image-upload" accept="image/*">
+              </div>
+
+              <!-- Google Classroom-style Attachment Card -->
+              <div class="attachment-card hidden" id="attachment-card">
+                <div class="attachment-info">
+                  <i data-lucide="paperclip" class="attachment-icon"></i>
+                  <div class="attachment-text">
+                    <span class="attachment-name" id="attachment-name">image.jpg</span>
+                    <span class="attachment-status" id="attachment-status">กำลังประมวลผลเอไอ...</span>
+                  </div>
+                </div>
+                <button class="attachment-remove-btn" id="btn-remove-attachment" title="ลบรูปภาพ">
+                  <i data-lucide="x"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 2: ECO-SORT GAME ==================== -->
+      <section id="view-game" class="tab-view">
+        <div class="game-container">
+          <!-- Game Info Header -->
+          <div class="game-header-stats">
+            <div class="game-stat">
+              <span class="stat-label">คะแนน</span>
+              <span class="stat-value text-glow" id="game-score">0000</span>
+            </div>
+            <div class="game-stat">
+              <span class="stat-label">เวลา</span>
+              <span class="stat-value text-glow" id="game-timer">60 วิ</span>
+            </div>
+            <div class="game-stat">
+              <span class="stat-label">คอมโบ</span>
+              <span class="stat-value text-glow" id="game-combo">x1</span>
+            </div>
+          </div>
+
+          <!-- Active Game Screen -->
+          <div class="game-board-wrapper">
+            <!-- HTML5 Game Canvas -->
+            <canvas id="game-canvas"></canvas>
+
+            <!-- Game Start/Intro Overlay -->
+            <div class="game-overlay active" id="game-start-overlay">
+              <i data-lucide="gamepad-2" class="overlay-icon"></i>
+              <h2>เกมท้าทายคัดแยกขยะ</h2>
+              <p>ลากหรือปัดขยะที่ตกลงมาใส่ถังขยะด้านล่างให้ถูกต้องก่อนที่จะตกลงสู่พื้น!</p>
+              <div class="game-instructions">
+                <div class="instruction-row"><span class="color-badge blue">สีน้ำเงิน</span> ➔ ขยะรีไซเคิล (พลาสติก, ขวดแก้ว, กระดาษ)</div>
+                <div class="instruction-row"><span class="color-badge green">สีเขียว</span> ➔ ขยะอินทรีย์ (เปลือกผลไม้, เศษอาหาร)</div>
+                <div class="instruction-row"><span class="color-badge red">สีแดง</span> ➔ ขยะอันตราย (แบตเตอรี่, หลอดไฟ, เครื่องใช้ไฟฟ้า)</div>
+                <div class="instruction-row"><span class="color-badge gray">สีเทา</span> ➔ ขยะทั่วไป (ซองขนม, กระดาษเปื้อน)</div>
+              </div>
+              <button class="btn btn-success" id="btn-start-game">เริ่มเล่นเกม</button>
+            </div>
+
+            <!-- Game Over Overlay -->
+            <div class="game-overlay hidden" id="game-over-overlay">
+              <i data-lucide="trophy" class="overlay-icon gold-text"></i>
+              <h2>ภารกิจทำความสะอาดสำเร็จ!</h2>
+              <div class="game-summary">
+                <div class="summary-row">ขยะที่แยกได้: <span id="summary-items">0</span></div>
+                <div class="summary-row">ความแม่นยำ: <span id="summary-accuracy">0%</span></div>
+                <div class="summary-row">คะแนนสุดท้าย: <span id="summary-score" class="green-text">0</span></div>
+                <div class="summary-row bonus-row">ได้รับ XP: <span id="summary-xp" class="gold-text">+0 XP</span></div>
+              </div>
+              <button class="btn btn-success" id="btn-restart-game">เล่นอีกครั้ง</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 3: LEADERBOARD ==================== -->
+      <section id="view-leaderboard" class="tab-view">
+        <div class="leaderboard-card">
+          <div class="leaderboard-header">
+            <div class="header-icon">
+              <i data-lucide="award" class="gold-text"></i>
+            </div>
+            <h2>ตารางคะแนนผู้พิทักษ์โลก</h2>
+            <p>ร่วมแข่งขันสะสมคะแนนกับสายตรวจสิ่งแวดล้อมเพื่อกรุงเทพฯ สีเขียว!</p>
+          </div>
+          
+          <!-- Leaderboard List -->
+          <div class="leaderboard-list" id="leaderboard-container">
+            <!-- Dynamic list generated by leaderboard.js -->
+          </div>
+        </div>
+      </section>
+      
+    </main>
+
+    <!-- ==================== AR SCAN RESULT POPUP ==================== -->
+    <div class="modal-backdrop hidden" id="scan-modal">
+      <div class="modal-content">
+        <!-- Close Button -->
+        <button class="modal-close-btn" id="btn-close-modal">
+          <i data-lucide="x"></i>
+        </button>
+
+        <div class="modal-header">
+          <div class="scan-status-badge">
+            <i data-lucide="check-circle-2"></i>
+            <span>สแกนสำเร็จ</span>
+          </div>
+          <h2 id="detected-item-title">ขวดพลาสติก</h2>
+        </div>
+
+        <div class="modal-body">
+          <div class="trash-info-grid">
+            
+            <!-- Left Panel: Minimalist Bin Illustration generated by AI -->
+            <div class="bin-display-box">
+              <div class="bin-image-container">
+                <img id="bin-image" src="assets/recycling.png" alt="Minimalist recycling bin">
+              </div>
+              <div class="bin-label" id="bin-category-label">รีไซเคิล</div>
+            </div>
+
+            <!-- Right Panel: Disposal Guidelines -->
+            <div class="rules-box">
+              <h3>คำแนะนำการทิ้งขยะ:</h3>
+              <ul class="rules-list" id="bin-rules-list">
+                <li>เทของเหลวที่เหลือออกให้หมดและล้างขวดให้สะอาด</li>
+                <li>บีบขวดให้แบนเพื่อประหยัดพื้นที่ถังขยะ</li>
+                <li>ถอดฝาขวดออกก่อนทิ้งลงถังสีน้ำเงิน</li>
+              </ul>
+              
+              <!-- Additional Eco Info -->
+              <div class="eco-fact">
+                <i data-lucide="info"></i>
+                <p id="bin-eco-fact">การรีไซเคิลขวดพลาสติกเพียง 1 ขวดช่วยประหยัดพลังงานได้มากพอที่จะเปิดใช้งานคอมพิวเตอร์แล็ปท็อปได้นานถึง 25 ชั่วโมง!</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+        <!-- Confirm Action Button -->
+        <div class="modal-footer">
+          <button class="btn btn-success btn-full" id="btn-confirm-dispose">
+            <i data-lucide="trash-2"></i>
+            <span>ทิ้งขยะลงถัง & รับ +50 XP</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== AUTHENTICATION OVERLAY ==================== -->
+    <div class="auth-container" id="auth-container">
+      
+      <!-- 1. Landing Screen -->
+      <div class="auth-card" id="auth-landing">
+        <div class="auth-header">
+          <i data-lucide="leaf" class="auth-brand-icon"></i>
+          <h2>ยินดีต้อนรับสู่ Pick&PicTrash</h2>
+          <p>กรุณาสร้างบัญชีหรือเข้าสู่ระบบเพื่อบันทึกและติดตามผลงานการแยกขยะของคุณ</p>
+        </div>
+        
+        <div class="auth-buttons-group">
+          <!-- Button 1: Sign up -->
+          <button class="btn btn-primary btn-full btn-auth" id="btn-go-signup">
+            สมัครสมาชิก
+          </button>
+          
+          <!-- Button 2: Sign up with Google -->
+          <button class="btn btn-primary btn-full btn-auth btn-google-auth" id="btn-go-google-signup">
+            <svg class="google-logo" viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+            </svg>
+            <span>สมัครใช้งานด้วยบัญชี Google</span>
+          </button>
+          
+          <!-- Button 3: Log in -->
+          <button class="btn btn-primary btn-full btn-auth" id="btn-go-login">
+            เข้าสู่ระบบ
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Sign Up Form Screen -->
+      <div class="auth-card hidden" id="auth-signup">
+        <button class="auth-back-btn" id="btn-signup-back">
+          <i data-lucide="arrow-left"></i>
+          <span>ย้อนกลับ</span>
+        </button>
+        
+        <div class="auth-header">
+          <h2>สมัครสมาชิก</h2>
+          <p>สร้างบัญชีเพื่อเริ่มต้นภารกิจสายตรวจสิ่งแวดล้อม</p>
+        </div>
+
+        <div class="auth-form">
+          <div class="form-group">
+            <input type="text" id="signup-username" placeholder="ชื่อผู้ใช้งาน" class="auth-input">
+          </div>
+          <div class="form-group">
+            <input type="email" id="signup-email" placeholder="อีเมล (เช่น name@domain.com)" class="auth-input">
+          </div>
+          <div class="form-group">
+            <input type="password" id="signup-password" placeholder="รหัสผ่าน" class="auth-input">
+          </div>
+          
+          <div class="auth-error-msg" id="signup-error"></div>
+          
+          <button class="btn btn-auth-submit btn-full" id="btn-submit-signup">
+            สมัครสมาชิก
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Log In Form Screen -->
+      <div class="auth-card hidden" id="auth-login">
+        <button class="auth-back-btn" id="btn-login-back">
+          <i data-lucide="arrow-left"></i>
+          <span>ย้อนกลับ</span>
+        </button>
+        
+        <div class="auth-header">
+          <h2>เข้าสู่ระบบ</h2>
+          <p>กรอกข้อมูลของคุณเพื่อเข้าสู่ระบบ</p>
+        </div>
+
+        <div class="auth-form">
+          <div class="form-group">
+            <input type="text" id="login-identifier" placeholder="ชื่อผู้ใช้งาน หรือ อีเมล" class="auth-input">
+          </div>
+          <div class="form-group">
+            <input type="password" id="login-password" placeholder="รหัสผ่าน" class="auth-input">
+          </div>
+          
+          <div class="auth-error-msg" id="login-error"></div>
+          
+          <button class="btn btn-auth-submit btn-full" id="btn-submit-login">
+            เข้าสู่ระบบ
+          </button>
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+
+  <!-- Main scripts -->
+  <script src="auth.js?v=2.3"></script>
+  <script src="leaderboard.js?v=2.3"></script>
+  <script src="game.js?v=2.3"></script>
+  <script src="scanner.js?v=2.3"></script>
+  <script src="app.js?v=2.3"></script>
+</body>
+</html>
