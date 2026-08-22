@@ -1,0 +1,60 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "testuser",
+      "real_name": "Test User",
+      "email": "testuser@example.com",
+      "password": "password123",
+      "is_verified": 1,
+      "level": 1,
+      "xp": 0,
+      "score": 0,
+      "scanned_count": 0,
+      "points": 0,
+      "tree_state": "{\"waterCount\":0,\"selectedFruit\":\"apple\"}",
+      "captcha_stats": "{\"played\":0,\"highscore\":0,\"totalScore\":0}",
+      "badge": "1",
+      "last_active": 1786152883307,
+      "created_at": "2026-08-08 08:34:37"
+    },
+    {
+      "id": 2,
+      "username": "Peach",
+      "real_name": "Peach",
+      "email": "pitchayadanava@gmail.com",
+      "password": "google_oauth_verified",
+      "is_verified": 1,
+      "level": 3,
+      "xp": 254,
+      "score": 654,
+      "scanned_count": 0,
+      "points": 104,
+      "tree_state": "{\"waterCount\": 65, \"selectedFruit\": \"apple\"}",
+      "captcha_stats": "{\"played\": 1, \"highscore\": 75, \"totalScore\": 75}",
+      "badge": "3",
+      "last_active": 1786760069813,
+      "created_at": "2026-08-08 08:35:24"
+    },
+    {
+      "id": 3,
+      "username": "eco_champion",
+      "real_name": "Eco Champion",
+      "email": "champion@bkk.go.th",
+      "password": "pass123",
+      "is_verified": 1,
+      "level": 5,
+      "xp": 150,
+      "score": 750,
+      "scanned_count": 15,
+      "points": 550,
+      "tree_state": "{\"waterCount\": 12, \"selectedFruit\": \"peach\"}",
+      "captcha_stats": "{\"played\": 3, \"highscore\": 100, \"totalScore\": 250}",
+      "badge": "5",
+      "last_active": 1786153668090,
+      "created_at": "2026-08-08 08:47:41"
+    }
+  ],
+  "scans": [],
+  "otps": []
+}
