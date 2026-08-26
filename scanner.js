@@ -302,7 +302,7 @@ function performAISearch(query) {
       }
     };
 
-    triggerScanHit(matchedKey, 0.99);
+    triggerScanHit(matchedKey, 0.99, true);
     showToast(`ตรวจพบขยะ: ${item.nameTh}`, "success");
     return;
   }
@@ -366,7 +366,7 @@ function performAISearch(query) {
     fact: { th: factTh, en: factEn }
   };
 
-  triggerScanHit(generatedKey, 0.95);
+  triggerScanHit(generatedKey, 0.95, true);
   showToast(`เอไอจำแนกขยะ: ${itemTh}`, "success");
 }
 
@@ -605,6 +605,11 @@ function initScanner() {
         performAISearch(aiTrashSearch.value);
       }
     };
+  }
+
+  const btnSearchCloseModal = document.getElementById("btn-search-close-modal");
+  if (btnSearchCloseModal) {
+    btnSearchCloseModal.addEventListener("click", closeScanModal);
   }
 
   // File Uploader Scan Action
@@ -1330,7 +1335,7 @@ async function captureAndScanCurrentFrame() {
 /**
  * Triggers modal display for scanned item
  */
-function triggerScanHit(itemKey, customScore) {
+function triggerScanHit(itemKey, customScore, isSearchMode = false) {
   isDetecting = false;
   
   const data = TRASH_DB[itemKey] || TRASH_DB["plastic_bottle"];
@@ -1345,6 +1350,19 @@ function triggerScanHit(itemKey, customScore) {
   if (modalContent) {
     modalContent.className = "modal-content";
     modalContent.classList.add(`bin-${data.bin}-theme`);
+  }
+
+  // Toggle Confirm Dispose vs Close Button based on isSearchMode
+  const btnConfirmDisposeEl = document.getElementById("btn-confirm-dispose");
+  const btnSearchCloseModalEl = document.getElementById("btn-search-close-modal");
+  if (btnConfirmDisposeEl && btnSearchCloseModalEl) {
+    if (isSearchMode) {
+      btnConfirmDisposeEl.classList.add("hidden");
+      btnSearchCloseModalEl.classList.remove("hidden");
+    } else {
+      btnConfirmDisposeEl.classList.remove("hidden");
+      btnSearchCloseModalEl.classList.add("hidden");
+    }
   }
 
   const isEn = window.currentLang === "en";

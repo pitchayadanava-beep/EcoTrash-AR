@@ -157,12 +157,6 @@
 
           <!-- Scanner Action Controls -->
           <div class="scanner-controls">
-            <!-- AI Smart Search Bar -->
-            <div class="ai-search-wrapper">
-              <input type="text" id="ai-trash-search" placeholder="🔍 ค้นหาวิธีแยกขยะ (เช่น โฟม, ถ่าน, เปลือกส้ม)..." class="search-input">
-              <button class="btn btn-primary btn-search" id="btn-ai-search">ค้นหาด้วย AI</button>
-            </div>
-
             <!-- Primary Instant Scan Button -->
             <button class="btn btn-scan-shutter" id="btn-scan-now" title="สแกนวัตถุตรงหน้าทันที">
               <div class="shutter-inner-ring">
@@ -203,6 +197,13 @@
               </div>
               <button class="attachment-remove-btn" id="btn-remove-attachment" title="ลบรูปภาพ">
                 <i data-lucide="x"></i>
+              </button>
+            </div>
+
+            <!-- AI Smart Search Bar -->
+            <div class="ai-search-wrapper">
+              <input type="text" id="ai-trash-search" placeholder="🔍 ค้นหาวิธีแยกขยะ (เช่น โฟม, ถ่าน, เปลือกส้ม)..." class="search-input">
+              <button class="btn btn-primary btn-search" id="btn-ai-search">ค้นหาด้วย AI</button>
             </div>
           </div>
         </div>
@@ -634,6 +635,10 @@
           <button class="btn btn-success btn-full" id="btn-confirm-dispose">
             <i data-lucide="trash-2"></i>
             <span>ทิ้งขยะลงถัง & รับ +50 XP</span>
+          </button>
+          <button class="btn btn-secondary btn-full hidden" id="btn-search-close-modal">
+            <i data-lucide="x-circle"></i>
+            <span>ปิดหน้าต่าง (Close)</span>
           </button>
         </div>
       </div>
