@@ -614,13 +614,9 @@ function initScanner() {
   if (btnCloseModal) btnCloseModal.addEventListener("click", closeScanModal);
   if (btnConfirmDispose) btnConfirmDispose.addEventListener("click", confirmDisposal);
   
-  // AI Search Bar Event Listeners
-  const btnAiSearch = document.getElementById("btn-ai-search");
+  // AI Search Bar Event Listener
   const aiTrashSearch = document.getElementById("ai-trash-search");
-  if (btnAiSearch && aiTrashSearch) {
-    btnAiSearch.onclick = () => {
-      performAISearch(aiTrashSearch.value);
-    };
+  if (aiTrashSearch) {
     aiTrashSearch.onkeypress = (e) => {
       if (e.key === "Enter") {
         performAISearch(aiTrashSearch.value);
