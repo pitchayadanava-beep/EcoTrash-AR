@@ -174,224 +174,7 @@ const TRASH_DB = {
   }
 };
 
-// Comprehensive Global Waste Directory (150+ popular waste items mapped to standard BKK bins)
-const GLOBAL_WASTE_DICT = {
-  // --- RECYCLABLE WASTE (recycling) ---
-  "glass jar": { nameTh: "โหลแก้ว / ขวดโหลใส", nameEn: "Glass Jar", bin: "recycling", icon: "🫙", rulesTh: ["ล้างเศษอาหารออกให้หมด", "คัดแยกฝาโลหะหรือพลาสติกแยกต่างหาก"], rulesEn: ["Rinse food remains clean", "Separate metal or plastic lids before recycling"] },
-  "wine bottle": { nameTh: "ขวดไวน์ / ขวดแก้วสี", nameEn: "Wine Bottle", bin: "recycling", icon: "🍾", rulesTh: ["เทของเหลวออกให้หมด", "ระวังขวดแตกชำรุด"], rulesEn: ["Empty all liquid residue", "Handle with care to avoid breakage"] },
-  "beer bottle": { nameTh: "ขวดเบียร์ / ขวดแก้วสีน้ำตาล", nameEn: "Beer Bottle", bin: "recycling", icon: "🍺", rulesTh: ["ล้างน้ำสะอาดแป๊บเดียว", "ทิ้งในถังรีไซเคิลถังน้ำเงิน"], rulesEn: ["Rinse quickly with water", "Dispose in Blue Recycling Bin"] },
-  "glass cup": { nameTh: "แก้วน้ำใส / แก้วน้ำดื่ม", nameEn: "Glass Beverage Cup", bin: "recycling", icon: "🥛", rulesTh: ["คัดแยกเฉพาะแก้วใสที่สะอาด", "เศษแก้วแตกควรห่อให้ปลอดภัยก่อนทิ้ง"], rulesEn: ["Separate clean transparent glass", "Wrap broken glass pieces safely before disposal"] },
-  "milk jug": { nameTh: "แกลลอนนมพลาสติก (HDPE)", nameEn: "HDPE Milk Jug", bin: "recycling", icon: "🥛", rulesTh: ["ล้างคราบนมให้สะอาดเพื่อกันบูด", "บีบแบนลงแล้วปิดฝาทิ้งลงถังน้ำเงิน"], rulesEn: ["Rinse out milk residue to prevent sour odors", "Crush flat and replace cap before throwing in Blue Bin"] },
-  "shampoo bottle": { nameTh: "ขวดสบู่ / ขวดแชมพูพลาสติก", nameEn: "Plastic Shampoo Bottle", bin: "recycling", icon: "🧴", rulesTh: ["ปั๊มเศษสบู่ออกให้หมดและล้างด้านใน", "แยกชิ้นส่วนหัวปั๊มสปริงออกทิ้งถังทั่วไป"], rulesEn: ["Rinse out all leftover shampoo/soap", "Separate spring-loaded pump nozzle into General Bin"] },
-  "detergent bottle": { nameTh: "แกลลอนน้ำยาซักผ้า", nameEn: "Plastic Detergent Jug", bin: "recycling", icon: "🧴", rulesTh: ["ล้างคราบน้ำยาซักผ้าออกให้หมด", "รีไซเคิลรวมกับพลาสติกแข็งชนิดอื่น"], rulesEn: ["Rinse completely to remove detergent chemical traces", "Recycle along with other rigid plastics"] },
-  "yogurt cup": { nameTh: "ถ้วยโยเกิร์ตพลาสติก", nameEn: "Yogurt Plastic Cup", bin: "recycling", icon: "🍧", rulesTh: ["ล้างโยเกิร์ตออกให้หมด", "ลอกฝาฟอยล์เคลือบแยกทิ้งขยะทั่วไป"], rulesEn: ["Rrape and wash yogurt leftovers", "Peel off foil lid and throw in General Waste"] },
-  "takeout container": { nameTh: "กล่องพลาสติกใส่อาหาร (สะอาด)", nameEn: "Clean Takeout Plastic Container", bin: "recycling", icon: "🍱", rulesTh: ["ต้องล้างคราบมันและเศษอาหารออกหมด", "หากเปื้อนคราบหนักมากให้ทิ้งถังขยะทั่วไป"], rulesEn: ["Must rinse off all grease and food remains", "If heavily soiled, dispose in General Waste instead"] },
-  "soda can": { nameTh: "กระป๋องโค้ก / กระป๋องน้ำอัดลม", nameEn: "Soda Aluminum Can", bin: "recycling", icon: "🥤", rulesTh: ["เทน้ำออกให้หมด", "บีบให้แบนช่วยเซฟพื้นที่ถังน้ำเงิน"], rulesEn: ["Empty all liquid residue", "Crush flat to save space in Blue Bin"] },
-  "beer can": { nameTh: "กระป๋องเบียร์ / กระป๋องอลูมิเนียม", nameEn: "Beer Aluminum Can", bin: "recycling", icon: "🍺", rulesTh: ["เทและล้างเศษของเหลว", "บีบแบนก่อนทิ้งลงถังน้ำเงิน"], rulesEn: ["Empty and rinse liquid", "Crush flat before recycling in Blue Bin"] },
-  "tin can": { nameTh: "กระป๋องเหล็ก / กระป๋องปลากระป๋อง", nameEn: "Tin/Steel Food Can", bin: "recycling", icon: "🥫", rulesTh: ["ล้างเศษอาหารออกให้หมดจด", "ระวังขอบโลหะบาดมือตอนคัดแยก"], rulesEn: ["Wash food residues thoroughly", "Beware of sharp metal edges when cleaning"] },
-  "cardboard shipping box": { nameTh: "กล่องกระดาษพัสดุ / กล่องลัง", nameEn: "Cardboard Packaging Box", bin: "recycling", icon: "📦", rulesTh: ["กรีดเทปกาวพลาสติกออกให้หมด", "พับกล่องราบเพื่อความสะดวกในการเก็บกวาด"], rulesEn: ["Slice off all plastic adhesive tape", "Flatten the box to simplify storage and sorting"] },
-  "newspaper": { nameTh: "หนังสือพิมพ์เก่า", nameEn: "Old Newspaper", bin: "recycling", icon: "📰", rulesTh: ["เก็บรักษาในที่แห้งพ้นจากน้ำฝน", "มัดแยกเป็นกองด้วยเชือกปอ"], rulesEn: ["Keep dry and safe from rain", "Tie securely in bundles using twine"] },
-  "magazine": { nameTh: "นิตยสาร / สมุดแคตตาล็อก", nameEn: "Magazine / Catalog Book", bin: "recycling", icon: "📚", rulesTh: ["ลอกชิ้นส่วนพลาสติกห่อหุ้มหรือของแถมออก", "เก็บรักษาให้สะอาดและแห้ง"], rulesEn: ["Remove plastic wrappers or freebie items", "Store clean and dry for recycling"] },
-  "writing paper": { nameTh: "กระดาษเขียนหนังสือ / สมุดการบ้าน", nameEn: "Writing Notebook / Document Paper", bin: "recycling", icon: "📄", rulesTh: ["ดึงลวดเย็บกระดาษหรือแกนขดลวดเหล็กออก", "ห้ามทิ้งหากเปื้อนคราบน้ำมันเด็ดขาด"], rulesEn: ["Remove metal staples or wire bindings", "Do not recycle if contaminated with oil/grease"] },
-  "envelope": { nameTh: "ซองจดหมายกระดาษ", nameEn: "Paper Envelope", bin: "recycling", icon: "✉️", rulesTh: ["ลอกแสตมป์หรือแถบกาวพลาสติกออก", "ซองจดหมายกันกระแทกบับเบิ้ลต้องทิ้งถังขยะทั่วไป"], rulesEn: ["Remove adhesive strip or stamp", "Padded bubble envelopes must be thrown in General Bin"] },
-  "egg carton": { nameTh: "แผงไข่กระดาษ", nameEn: "Paper Egg Carton", bin: "recycling", icon: "🥚", rulesTh: ["ต้องไม่มีคราบไข่เปื้อนซึม", "ทิ้งถังรีไซเคิลกระดาษสีน้ำเงิน"], rulesEn: ["Must be dry with no liquid egg leaks", "Dispose in Blue paper recycling bin"] },
-  "metal lid": { nameTh: "ฝาขวดแก้วโลหะ / ฝาเกลียว", nameEn: "Metal Bottle Cap/Lid", bin: "recycling", icon: "🪙", rulesTh: ["ล้างเศษสิ่งสกปรกออก", "ทิ้งรวมกันในช่องรีไซเคิลโลหะ"], rulesEn: ["Rinse off dirt residue", "Dispose in metal recycling stream"] },
-  "aluminum foil": { nameTh: "ฟอยล์อลูมิเนียมสะอาด", nameEn: "Clean Aluminum Foil", bin: "recycling", icon: "🥈", rulesTh: ["ต้องไม่มีเศษอาหารเกาะติดมัน", "ขยำรวมเป็นก้อนกลมใหญ่ก่อนทิ้งถังน้ำเงิน"], rulesEn: ["Must be free of food scraps and oils", "Crumple clean foil into a tight ball before throwing in Blue Bin"] },
-  "office paper": { nameTh: "กระดาษสำนักงาน / เอกสาร A4", nameEn: "A4 Office Paper", bin: "recycling", icon: "📄", rulesTh: ["นำไปย่อยทำลายหรือแยกคัดกระดาษทิ้งแห้ง", "หลีกเลี่ยงเศษอาหารเปื้อนปน"], rulesEn: ["Shred confidential papers or stack dry A4 sheets", "Ensure no food contamination"] },
-  
-  // --- ORGANIC WASTE (organic) ---
-  "banana peel": { nameTh: "เปลือกกล้วย", nameEn: "Banana Peel", bin: "organic", icon: "🍌", rulesTh: ["ลอกฉลากพลาสติกเหนียวๆ ออกก่อนทิ้ง", "ทิ้งถังเขียวอินทรีย์ย่อยสลายได้"], rulesEn: ["Peel off barcode stickers", "Dispose in Green Organic Bin"] },
-  "apple core": { nameTh: "เศษแอปเปิ้ล", nameEn: "Apple Core", bin: "organic", icon: "🍎", rulesTh: ["ทิ้งรวมกับขยะเศษอาหารทั่วไป", "สามารถนำไปผลิตเป็นปุ๋ยหมักบำรุงต้นไม้ได้"], rulesEn: ["Throw with normal organic food waste", "Excellent for composting into tree nutrients"] },
-  "orange peel": { nameTh: "เปลือกส้ม / เปลือกมะนาว", nameEn: "Citrus Orange Peel", bin: "organic", icon: "🍊", rulesTh: ["ช่วยไล่แมลงในปุ๋ยหมักธรรมชาติ", "ห้ามทิ้งบรรจุภัณฑ์ถุงตาข่ายลงถังเขียว"], rulesEn: ["Great for repelling insects in compost", "Do not throw net mesh packaging in Green Bin"] },
-  "watermelon rind": { nameTh: "เปลือกแตงโม", nameEn: "Watermelon Rind", bin: "organic", icon: "🍉", rulesTh: ["หั่นให้เป็นชิ้นเล็กก่อนหมักเพื่อช่วยย่อยเร็ว", "ทิ้งถังสีเขียว"], rulesEn: ["Chop into smaller pieces to accelerate compost decay", "Dispose in Green Bin"] },
-  "vegetable scraps": { nameTh: "เศษผัก / ขั้วผักมะเขือเทศ", nameEn: "Vegetable Scraps", bin: "organic", icon: "🥬", rulesTh: ["กรองน้ำแกงหรือน้ำซุปออกให้แห้ง", "ทิ้งลงช่องขยะอินทรีย์ทำปุ๋ย"], rulesEn: ["Filter out soups and drain liquids", "Throw in Organic composting section"] },
-  "onion skin": { nameTh: "เปลือกหัวหอม / เปลือกกระเทียม", nameEn: "Onion / Garlic Skin", bin: "organic", icon: "🧄", rulesTh: ["ย่อยสลายได้ง่ายและเร็วมาก", "ใส่ถังเขียวสำหรับบำรุงพืช"], rulesEn: ["Decomposes easily and rapidly", "Dispose in Green Bin for soil nutrition"] },
-  "coffee grounds": { nameTh: "กากกาแฟ / ผงกาแฟใช้แล้ว", nameEn: "Spent Coffee Grounds", bin: "organic", icon: "☕", rulesTh: ["แยกถุงกรองกระดาษหรือแคปซูลอลูมิเนียมออกก่อนทิ้ง", "กากกาแฟบำรุงดินได้ดีสุดๆ"], rulesEn: ["Separate paper filter bag or aluminum capsule", "Coffee grounds are superb for soil enrichment"] },
-  "tea bag": { nameTh: "ถุงชาใช้แล้ว (ไม่มีแม็กซ์เย็บ)", nameEn: "Paper Tea Bag (Staple-free)", bin: "organic", icon: "🍵", rulesTh: ["ตรวจสอบว่าไม่มีลวดหนีบ (แม็กซ์เหล็ก) เย็บติด", "ทิ้งลงถังอินทรีย์"], rulesEn: ["Ensure there is no metal staple attached", "Dispose in Organic Bin"] },
-  "eggshell": { nameTh: "เปลือกไข่เป็ด / เปลือกไข่ไก่", nameEn: "Duck/Chicken Eggshell", bin: "organic", icon: "🥚", rulesTh: ["บดแหลกเพื่อเพิ่มสารแคลเซียมให้ดินหมัก", "ทิ้งถังขยะอินทรีย์สีเขียว"], rulesEn: ["Crush shells to boost calcium content in compost", "Throw in Green Organic Bin"] },
-  "fish bone": { nameTh: "ก้างปลา / หัวปลาเศษอาหาร", nameEn: "Fish Bone / Fish Head Scraps", bin: "organic", icon: "🐟", rulesTh: ["ระวังทิ่มทะลุถุงขยะ", "กรองน้ำต้มออกทิ้งถังเขียว"], rulesEn: ["Beware of sharp bones piercing waste bags", "Drain soup before disposing in Green Bin"] },
-  "chicken bone": { nameTh: "กระดูกไก่ / กระดูกสัตว์ใหญ่", nameEn: "Chicken / Meat Bones", bin: "organic", icon: "🍗", rulesTh: ["ย่อยสลายได้ช้ากว่าผัก แต่ทำปุ๋ยได้ดี", "ทิ้งถังเขียวอินทรีย์"], rulesEn: ["Decomposes slower than veggies but rich in phosphorus", "Dispose in Green Bin"] },
-  "bread crust": { nameTh: "เศษขนมปัง / ขอบขนมปังเสีย", nameEn: "Bread Crust / Stale Bread", bin: "organic", icon: "🍞", rulesTh: ["ต้องไม่มีบรรจุภัณฑ์พลาสติกห่ออยู่", "ทิ้งถังขยะย่อยสลายสีเขียว"], rulesEn: ["Must not be wrapped in plastic packaging", "Throw in Green biodegradable bin"] },
-  "rice leftover": { nameTh: "เศษข้าวสวย / ข้าวบูดคาหม้อ", nameEn: "Leftover Cooked Rice", bin: "organic", icon: "🍚", rulesTh: ["สะเด็ดน้ำออกห้ามแฉะเกินไปเพื่อคุมกลิ่น", "ทิ้งถังขยะเปียกอินทรีย์"], rulesEn: ["Drain excess moisture to control odor", "Dispose in wet Organic Bin"] },
-  "dead leaves": { nameTh: "ใบไม้แห้ง / ใบไม้ร่วง", nameEn: "Dry Fallen Leaves", bin: "organic", icon: "🍂", rulesTh: ["รวบรวมทำปุ๋ยอินทรีย์บำรุงพืชสีเขียว", "ห้ามปะปนกับถุงขยะพลาสติกทั่วไป"], rulesEn: ["Collect for organic fertilizer", "Do not mix with generic plastic bags"] },
-  "grass clippings": { nameTh: "เศษหญ้าที่ตัดแต่งจากสนาม", nameEn: "Lawn Grass Clippings", bin: "organic", icon: "🌱", rulesTh: ["ทิ้งรวมกองทำปุ๋ยหรือเศษวัชพืชอินทรีย์", "ทิ้งถังสีเขียว"], rulesEn: ["Compost grass clippings directly or throw in Green Bin", "Perfect organic compost base"] },
-  "coconut shell": { nameTh: "กะลามะพร้าว / เปลือกมะพร้าว", nameEn: "Coconut Shell / Husk", bin: "organic", icon: "🥥", rulesTh: ["ย่อยสลายค่อนข้างช้า แต่เป็นสารอินทรีย์ร้อยเปอร์เซ็นต์", "ใส่ถังเขียว"], rulesEn: ["Decomposes slowly but 100% natural organic material", "Dispose in Green Bin"] },
-  
-  // --- HAZARDOUS WASTE (hazardous) ---
-  "alkaline battery": { nameTh: "ถ่านไฟฉาย AA / AAA / ถ่านก้อน", nameEn: "AAA/AA/Dry Cell Battery", bin: "hazardous", icon: "🔋", rulesTh: ["ห้ามเจาะ แกะ หรือนำไปเผาเด็ดขาด", "รวบรวมทิ้งจุดรับขยะอันตรายสีแดง"], rulesEn: ["Do not puncture, open, or burn", "Collect and drop off at designated Red Hazardous Bin"] },
-  "lithium battery": { nameTh: "แบตเตอรี่ลิเธียมไอออน / แบตมือถือ", nameEn: "Lithium-Ion Phone Battery", bin: "hazardous", icon: "🔋", rulesTh: ["ห้ามหักงอหรือกระแทก (เสี่ยงระเบิด/ไฟไหม้)", "แยกขยะทิ้งช่องสีแดงอันตรายเท่านั้น"], rulesEn: ["Do not bend or impact (explosion & fire hazard)", "Dispose in designated Red Bin only"] },
-  "car battery": { nameTh: "แบตเตอรี่รถยนต์เก่า", nameEn: "Lead-Acid Car Battery", bin: "hazardous", icon: "🚗", rulesTh: ["ระวังน้ำกรดรั่วไหลสัมผัสผิวหนัง", "ส่งร้านแบตเตอรี่เก่าหรือจุดทิ้งสารเคมีอันตราย"], rulesEn: ["Beware of acid leaks contacting skin", "Return to automotive shops or certified chemical disposal points"] },
-  "button cell": { nameTh: "ถ่านกระดุม / ถ่านนาฬิกาข้อมือ", nameEn: "Button Cell Watch Battery", bin: "hazardous", icon: "🪙", rulesTh: ["มีสารปรอทผสมอยู่สูงมาก", "ทิ้งในช่องขยะอันตรายถังแดง"], rulesEn: ["Contains high amounts of toxic mercury", "Dispose in Red Hazardous Bin"] },
-  "led bulb": { nameTh: "หลอดไฟ LED", nameEn: "LED Light Bulb", bin: "hazardous", icon: "💡", rulesTh: ["คัดแยกขยะอิเล็กทรอนิกส์สารเคมี", "ห่อกันกระแทกเพื่อความปลอดภัยของคนเก็บขยะ"], rulesEn: ["Categorized as e-waste hazardous chemical items", "Wrap safely to prevent shattering accidents for collectors"] },
-  "fluorescent bulb": { nameTh: "หลอดไฟฟลูออเรสเซนต์ / หลอดนีออน", nameEn: "Fluorescent Tube Light", bin: "hazardous", icon: "💡", rulesTh: ["มีสารปรอทเคลือบอยู่ด้านในหลอดแก้ว", "ห้ามทำแตกเด็ดขาด ทิ้งถังแดงอันตรายห่อกระดาษรอบหลอด"], rulesEn: ["Contains highly toxic internal mercury coating", "Do not break! Wrap in protective paper and throw in Red Bin"] },
-  "smart phone": { nameTh: "โทรศัพท์มือถือเก่าชำรุด", nameEn: "Old Broken Smart Phone", bin: "hazardous", icon: "📱", rulesTh: ["เป็นขยะอิเล็กทรอนิกส์ที่มีโลหะหนักปนเปื้อนสูง", "ทิ้งลงตู้รับ E-waste แดง"], rulesEn: ["E-waste contaminated with toxic heavy metals", "Drop off in official Red E-waste bin"] },
-  "tablet": { nameTh: "ไอแพด / แท็บเล็ตเสีย", nameEn: "Old Tablet / E-Waste", bin: "hazardous", icon: "📟", rulesTh: ["ถอดชิ้นส่วนหน้าจอแยกทิ้งขยะอันตราย", "อย่าเจาะแบตบวม"], rulesEn: ["Classified as toxic electronic hazardous waste", "Do not puncture swollen batteries"] },
-  "aerosol can": { nameTh: "กระป๋องสเปรย์ยาฆ่าแมลง / สีสเปรย์", nameEn: "Aerosol Spray Can", bin: "hazardous", icon: "💨", rulesTh: ["ห้ามเผาไฟหรือเจาะกระป๋อง (อาจระเบิดได้)", "ต้องฉีดล้างแรงดันก๊าซให้เกลี้ยงก่อนทิ้งจุดสีแดง"], rulesEn: ["Do not burn or puncture (pressure explosion risk)", "Discharge residual pressure completely and throw in Red Bin"] },
-  "spray paint": { nameTh: "กระป๋องสีสเปรย์ใช้แล้ว", nameEn: "Used Aerosol Paint Can", bin: "hazardous", icon: "🎨", rulesTh: ["สารเคมีตกค้างติดไฟได้ง่าย", "แยกทิ้งในถังขยะอันตรายสีแดง"], rulesEn: ["Chemical residue is highly flammable", "Separate into Red Hazardous Bin"] },
-  "paint can": { nameTh: "ถังสีทาบ้าน / กระป๋องสีเคมี", nameEn: "Household Paint Can", bin: "hazardous", icon: "🎨", rulesTh: ["หากสียังเปียกให้ผสมปูนหรือดินให้แห้งก่อนทิ้ง", "ส่งกำจัดในกลุ่มขยะเคมีแดง"], rulesEn: ["If wet, mix with sand or cement to dry out", "Dispose as hazardous chemical waste in Red Bin"] },
-  "motor oil": { nameTh: "น้ำมันเครื่องรถยนต์ใช้แล้ว", nameEn: "Used Motor Oil / Engine Lubricant", bin: "hazardous", icon: "🛢️", rulesTh: ["บรรจุใส่แกลลอนปิดฝาแน่นหนากันรั่วซึม", "ทิ้งจุดกำจัดน้ำมันอุตสาหกรรมอันตราย"], rulesEn: ["Seal tightly in secure plastic containers", "Dispose at licensed chemical recycling collection depots"] },
-  "syringe": { nameTh: "เข็มฉีดยา / สปริงเข็มฉีดยาใช้แล้ว", nameEn: "Used Syringe / Needle", bin: "hazardous", icon: "💉", rulesTh: ["จัดเป็นขยะติดเชื้ออันตรายมาก", "ใส่ขวดน้ำพลาสติกหนาๆ ปิดฝาแน่นเพื่อความปลอดภัยสูงสุด"], rulesEn: ["Classified as highly biohazardous infectious waste", "Place in thick sealed plastic bottles before disposal"] },
-  "expired medicine": { nameTh: "ยาหมดอายุ / แผงยาเสีย", nameEn: "Expired Pharmaceutical Medicine", bin: "hazardous", icon: "💊", rulesTh: ["ห้ามแกะเม็ดยาเทลงอ่างล้างจาน (ปนเปื้อนน้ำ)", "ทิ้งทั้งขวดหรือแผงบรรจุลงถังขยะสีแดง"], rulesEn: ["Never flush down sinks (water pollution risk)", "Dispose entire container/foil packs directly in Red Bin"] },
-  "nail polish": { nameTh: "ขวดน้ำยาทาเล็บ / สารเคมีเคลือบเงา", nameEn: "Nail Polish Bottle", bin: "hazardous", icon: "💅", rulesTh: ["สารทินเนอร์เป็นเคมีไวไฟอันตราย", "ทิ้งลงช่องถังแดงขยะมีพิษ"], rulesEn: ["Contains highly flammable solvents", "Dispose in Red toxic hazardous bin"] },
-  
-  // --- GENERAL WASTE (general) ---
-  "styrofoam cup": { nameTh: "แก้วโฟม / บรรจุภัณฑ์โฟม", nameEn: "Styrofoam Cup / Pack", bin: "general", icon: "🥡", rulesTh: ["ทำความสะอาดคราบน้ำและเศษอาหารออกหมด", "ทิ้งถังขยะทั่วไปสีเทาเพื่อนำไปฝังกลบ"], rulesEn: ["Empty liquid and food residues", "Dispose in Gray General Waste Bin for landfill"] },
-  "styrofoam box": { nameTh: "กล่องโฟมบรรจุอาหาร", nameEn: "Styrofoam Food Box", bin: "general", icon: "🥡", rulesTh: ["คราบน้ำมันมันเยิ้มล้างออกยากมาก", "มัดใส่ถุงแล้วแยกทิ้งลงถังทั่วไป"], rulesEn: ["Greasy food stains make it non-recyclable", "Bag securely and dispose in Gray General Bin"] },
-  "bubble wrap": { nameTh: "พลาสติกกันกระแทก / บับเบิ้ล", nameEn: "Plastic Bubble Wrap Sheet", bin: "general", icon: "🫧", rulesTh: ["บดเจาะฟองอากาศออกได้เพื่อลดพื้นที่ขยะ", "ทิ้งลงถังขยะทั่วไปสีเทา"], rulesEn: ["Pop air bubbles to minimize volume", "Dispose in Gray General Bin"] },
-  "plastic wrapper": { nameTh: "ถุงขนม / ซองไอติม / ฟิล์มพลาสติก", nameEn: "Plastic Film Wrapper", bin: "general", icon: "🍭", rulesTh: ["พลาสติกบางเคลือบสีไม่สามารถรีไซเคิลได้", "ทิ้งลงในถังขยะทั่วไปสีเทา"], rulesEn: ["Thin printed plastics cannot be recycled", "Dispose in Gray General Bin"] },
-  "snack bag": { nameTh: "ซองขนมฟอยล์ / ถุงฟอยล์อลูมิเนียมเคลือบ", nameEn: "Foil-lined Snack Packaging", bin: "general", icon: "🍿", rulesTh: ["มีเศษอลูมิเนียมเคลือบผสมพลาสติกหลายชั้น", "ย่อยสลายได้ช้ามาก ทิ้งถังสีเทา"], rulesEn: ["Composed of multiple layers of metal and plastic", "Non-recyclable, dispose in Gray General Bin"] },
-  "used napkin": { nameTh: "กระดาษทิชชูใช้แล้ว", nameEn: "Used Tissue Paper / Napkin", bin: "general", icon: "🧻", rulesTh: ["เปื้อนเชื้อโรคและไขมันอาหารไม่เหมาะรีไซเคิล", "แยกทิ้งถังขยะทั่วไปสีเทา"], rulesEn: ["Soiled with grease and organic fluids", "Do not recycle, throw in Gray General Bin"] },
-  "wet wipe": { nameTh: "ทิชชูเปียก / ผ้าเย็นทิ้ง", nameEn: "Wet Wipe / Wet Tissue", bin: "general", icon: "🧻", rulesTh: ["ทำจากเส้นใยสังเคราะห์เหนียวย่อยยากมาก", "ห้ามทิ้งลงชักโครกเด็ดขาด ทิ้งถังสีเทา"], rulesEn: ["Made of synthetic plastic fibers (non-flushable)", "Do not flush! Dispose in Gray General Bin"] },
-  "diaper": { nameTh: "ผ้าอ้อมสำเร็จรูปใช้แล้ว / แพมเพิส", nameEn: "Soiled Disposable Diaper", bin: "general", icon: "👶", rulesTh: ["พับมัดให้มิดชิดเพื่อกักกลิ่นและป้องกันเชื้อแพร่", "ทิ้งถังทั่วไปสีเทาอย่างเร็ว"], rulesEn: ["Roll up and secure tight to seal odors and germs", "Dispose in Gray General Waste Bin immediately"] },
-  "straw": { nameTh: "หลอดดูดน้ำพลาสติก", nameEn: "Plastic Drinking Straw", bin: "general", icon: "🥤", rulesTh: ["ขนาดเล็กเกินไปสำหรับเครื่องแยกขยะรีไซเคิล", "ทิ้งลงถังขยะทั่วไปสีเทา"], rulesEn: ["Too small to catch in machinery filters", "Dispose in Gray General Waste Bin"] },
-  "plastic cutlery": { nameTh: "ช้อนส้อมพลาสติก / มีดพลาสติกทิ้ง", nameEn: "Disposable Plastic Fork/Spoon/Knife", bin: "general", icon: "🍴", rulesTh: ["ส่วนใหญ่ปนเปื้อนคราบมันจากเศษอาหาร", "ทิ้งลงถังทั่วไป"], rulesEn: ["Heavily contaminated with food grease", "Dispose in Gray General Bin"] },
-  "greasy pizza box": { nameTh: "กล่องพิซซ่าเปื้อนคราบชีส/น้ำมัน", nameEn: "Greasy Pizza Cardboard Box", bin: "general", icon: "🍕", rulesTh: ["ส่วนที่สะอาดสามารถตัดไปแยกทิ้งช่องรีไซเคิลได้", "ส่วนที่เยิ้มน้ำมันต้องทิ้งขยะทั่วไปสีเทา"], rulesEn: ["Clean parts can be torn off for paper recycling", "Oily/greasy parts must go into Gray General Bin"] },
-  "broken mirror": { nameTh: "กระจกแตก / เศษกระจกส่องหน้า", nameEn: "Broken Mirror / Window Glass", bin: "general", icon: "🪞", rulesTh: ["กระจกประเภทนี้มีส่วนผสมเคมีต่างจากขวดใส", "ห่อกระดาษหนาๆ และเขียนคำเตือนของมีคม"], rulesEn: ["Mirror glass composition is non-recyclable", "Wrap in thick cardboard and label 'Sharp Broken Glass'"] },
-  "ceramic mug": { nameTh: "แก้วเซรามิก / ถ้วยกระเบื้องแตก", nameEn: "Ceramic Coffee Mug / Plate", bin: "general", icon: "☕", rulesTh: ["ทนความร้อนสูงเกินไป ไม่สามารถหลอมรวมแก้วรีไซเคิล", "ทิ้งลงในถังขยะทั่วไปสีเทา"], rulesEn: ["High melting point ruins standard glass recycling", "Dispose in Gray General Bin"] }
-};
 
-/**
- * Searches the dynamic global directory and uses fallback heuristics to identify any waste type
- */
-function performAISearch(query) {
-  if (!query || !query.trim()) {
-    showToast("กรุณาพิมพ์ชื่อขยะที่ต้องการสแกน", "error");
-    return;
-  }
-
-  const cleanQuery = query.toLowerCase().trim();
-  
-  // 1. Direct key search or keyword search
-  let matchedKey = null;
-  let maxScore = 0;
-
-  for (const key in GLOBAL_WASTE_DICT) {
-    const item = GLOBAL_WASTE_DICT[key];
-    const thName = (item.nameTh || "").toLowerCase();
-    const enName = (item.nameEn || "").toLowerCase();
-
-    if (cleanQuery === key || cleanQuery === thName || cleanQuery === enName) {
-      matchedKey = key;
-      break;
-    }
-
-    if (key.includes(cleanQuery) || thName.includes(cleanQuery) || enName.includes(cleanQuery) || cleanQuery.includes(key)) {
-      const score = Math.max(key.length, thName.length);
-      if (score > maxScore) {
-        maxScore = score;
-        matchedKey = key;
-      }
-    }
-  }
-
-  // 2. If matched, construct TRASH_DB dynamically and trigger
-  if (matchedKey) {
-    const item = GLOBAL_WASTE_DICT[matchedKey];
-    
-    TRASH_DB[matchedKey] = {
-      title: { th: item.nameTh, en: item.nameEn },
-      bin: item.bin,
-      label: { 
-        th: item.bin === "recycling" ? "ขยะรีไซเคิล (สีน้ำเงิน)" : item.bin === "organic" ? "ขยะอินทรีย์ย่อยสลาย (สีเขียว)" : item.bin === "hazardous" ? "ขยะอันตราย (สีแดง)" : "ขยะทั่วไป (สีเทา)",
-        en: item.bin === "recycling" ? "Recyclable Waste (Blue Bin)" : item.bin === "organic" ? "Organic Waste (Green Bin)" : item.bin === "hazardous" ? "Hazardous Waste (Red Bin)" : "General Waste (Gray Bin)"
-      },
-      rules: { th: item.rulesTh, en: item.rulesEn },
-      fact: {
-        th: `เอไอแยกวัตถุชิ้นนี้เข้ากลุ่ม ${item.nameTh} (${item.bin}) อย่างถูกต้อง!`,
-        en: `AI correctly mapped this item to ${item.nameEn} (${item.bin})!`
-      }
-    };
-
-    triggerScanHit(matchedKey, 0.99, true);
-    showToast(`ตรวจพบขยะ: ${item.nameTh}`, "success");
-    return;
-  }
-
-  // 3. Fallback Heuristics Classifier (if no dict match)
-  let category = "general";
-  let itemTh = query;
-  let itemEn = query;
-  
-  const recKeywords = ["กระดาษ", "paper", "cardboard", "box", "ขวด", "bottle", "glass", "can", "กระป๋อง", "metal", "เหล็ก", "พลาสติก", "plastic", "รีไซเคิล", "recycle", "แก้ว", "อลูมิเนียม", "pet", "hdpe", "jar", "หนังสือ"];
-  const orgKeywords = ["เศษอาหาร", "food", "เปลือก", "peel", "ผัก", "vegetable", "ผลไม้", "fruit", "กล้วย", "banana", "กระดูก", "bone", "ใบไม้", "leaf", "หญ้า", "ข้าว", "ขนมปัง", "ชาม", "พืช"];
-  const hazKeywords = ["แบต", "battery", "ถ่าน", "มือถือ", "phone", "ไฟ", "bulb", "หลอด", "คอม", "computer", "ยา", "medicine", "สารเคมี", "spray", "สี", "paint", "ไฟแช็ก", "แก๊ส", "เข็ม", "พยาบาล"];
-  
-  const hasKeyword = (text, list) => list.some(word => text.includes(word));
-
-  let matchedKeyword = false;
-  if (hasKeyword(cleanQuery, recKeywords)) {
-    category = "recycling";
-    matchedKeyword = true;
-  } else if (hasKeyword(cleanQuery, orgKeywords)) {
-    category = "organic";
-    matchedKeyword = true;
-  } else if (hasKeyword(cleanQuery, hazKeywords)) {
-    category = "hazardous";
-    matchedKeyword = true;
-  }
-
-  if (!matchedKeyword) {
-    category = "invalid";
-  }
-
-  let rulesTh = [];
-  let rulesEn = [];
-  let factTh = "";
-  let factEn = "";
-
-  if (category === "recycling") {
-    rulesTh = ["เทของเหลวออกให้หมดและล้างคราบสกปรกออกคร่าวๆ", "พับหรือบีบแบนเพื่อประหยัดเนื้อที่ของถังสีน้ำเงิน", "คัดแยกแยกฝาพลาสติกหรือชิ้นส่วนที่ไม่ใช่รีไซเคิลออก"];
-    rulesEn = ["Empty and rinse off liquid and dirt residue", "Flatten or crush to save space in the Blue Bin", "Separate plastic caps or non-recyclable components"];
-    factTh = `เอไอวิเคราะห์ว่าสิ่งนี้ทำมาจากวัสดุรีไซเคิลได้ ทิ้งถังสีน้ำเงินจะช่วยลดความร้อนของโลก!`;
-    factEn = `AI classified this as a recyclable material. Throwing it in the Blue Bin reduces global warming!`;
-  } else if (category === "organic") {
-    rulesTh = ["กรองน้ำแกงหรือสะเด็ดของเหลวออกให้เรียบร้อยก่อนทิ้ง", "คัดแยกพลาสติกห่อหุ้ม ข้าวกล่องกระดาษ หรือฟอยล์ปะปนออก", "ทิ้งลงในถังขยะอินทรีย์ย่อยสลายสีเขียว"];
-    rulesEn = ["Drain any soups or liquids before disposal", "Ensure no plastic wrappers or foil sheets are mixed in", "Dispose in Green Organic Compost Bin"];
-    factTh = `เศษอาหารและอินทรีย์สารสามารถนำไปทำปุ๋ยหมักบำรุงต้นไม้หรือพลังงานก๊าซชีวภาพได้อย่างดี!`;
-    factEn = `Food scraps and organic waste can be converted into rich garden fertilizer or clean biogas!`;
-  } else if (category === "hazardous") {
-    rulesTh = ["ห้ามแกะหรือทุบกระแทกเพราะอาจเกิดประกายไฟหรือสารเคมีรั่วไหล", "เก็บรวบรวมในจุดทิ้งขยะอันตราย (ถังขยะสีแดง) เท่านั้น", "ห้ามทิ้งปะปนกับขยะในครัวเรือนทั่วไปอย่างเด็ดขาด"];
-    rulesEn = ["Do not crush or damage (flammable chemical leakage risk)", "Dispose exclusively at designated Hazardous points (Red Bin)", "Never mix with general household waste"];
-    factTh = `ขยะกลุ่มนี้มีสารพิษโลหะหนักตกค้างสูงมาก การแยกทิ้งถังแดงทำให้กำจัดอย่างถูกหลักและปลอดภัย!`;
-    factEn = `This contains heavy metals and toxic chemicals. Sorting in Red Bin ensures professional hazard safety!`;
-  } else if (category === "invalid") {
-    rulesTh = [
-      "ไม่สามารถตรวจสอบได้ กรุณาพิมพ์ให้ครบถ้วน",
-      "ลองพิมพ์คีย์เวิร์ดขยะภาษาไทยหรืออังกฤษใหม่ (เช่น ขวดพลาสติก, เปลือกผลไม้, แบตเตอรี่, ถุงกระดาษ)",
-      "หลีกเลี่ยงการสะกดผิดหรือป้อนตัวอักษรสุ่มที่ไม่มีความหมาย"
-    ];
-    rulesEn = [
-      "Cannot verify. Please type completely and correctly.",
-      "Try searching using standard waste names (e.g. plastic bottle, banana peel, dry battery, box)",
-      "Avoid spelling typos or random keyboard gibberish"
-    ];
-    factTh = `เอไอคัดแยกขยะอัจฉริยะล้มเหลวในการตีความคำค้นหาของคุณ กรุณาตรวจสอบตัวสะกดใหม่อีกครั้ง`;
-    factEn = `The smart AI classifier was unable to map this search term. Please check your spelling and try again.`;
-  } else {
-    rulesTh = ["แยกขยะที่รีไซเคิลไม่ได้หรือเปื้อนเปรอะสิ่งสกปรกหนักทิ้งถังสีเทา", "มัดถุงให้แน่นและมิดชิดเพื่อสุขอนามัยที่ดี", "ทิ้งถังขยะทั่วไป (สีเทา) เพื่อนำไปฝังกลบหรือผลิตพลังงานความร้อน"];
-    rulesEn = ["Separate non-recyclable or heavily soiled waste into Gray Bin", "Tie garbage bags securely for hygiene safety", "Dispose in Gray General Bin for professional landfill or incineration"];
-    factTh = `การลดใช้บรรจุภัณฑ์ใช้ครั้งเดียวทิ้ง (Single-use) คือหัวใจสำคัญของการลดขยะประเภทนี้!`;
-    factEn = `Reducing single-use plastics at the store is the key to preventing the growth of general landfill waste!`;
-  }
-
-  const generatedKey = `custom_${cleanQuery.replace(/[^a-z0-9]/g, "_")}`;
-  
-  TRASH_DB[generatedKey] = {
-    title: { th: itemTh, en: itemEn },
-    bin: category,
-    label: {
-      th: category === "recycling" ? "ขยะรีไซเคิล (สีน้ำเงิน)" : category === "organic" ? "ขยะอินทรีย์ย่อยสลาย (สีเขียว)" : category === "hazardous" ? "ขยะอันตราย (สีแดง)" : category === "invalid" ? "ไม่สามารถตรวจสอบได้" : "ขยะทั่วไป (สีเทา)",
-      en: category === "recycling" ? "Recyclable Waste (Blue Bin)" : category === "organic" ? "Organic Waste (Green Bin)" : category === "hazardous" ? "Hazardous Waste (Red Bin)" : category === "invalid" ? "Unverifiable" : "General Waste (Gray Bin)"
-    },
-    rules: { th: rulesTh, en: rulesEn },
-    fact: { th: factTh, en: factEn }
-  };
-
-  triggerScanHit(generatedKey, 0.95, true);
-  showToast(`เอไอจำแนกขยะ: ${itemTh}`, "success");
-}
-
-// Comprehensive 80-Class COCO Dataset to Waste Bin Mapping Matrix
 const cocoToTrashMap = {
   // Recyclable (Blue Bin)
   "bottle": "plastic_bottle",
@@ -614,20 +397,7 @@ function initScanner() {
   if (btnCloseModal) btnCloseModal.addEventListener("click", closeScanModal);
   if (btnConfirmDispose) btnConfirmDispose.addEventListener("click", confirmDisposal);
   
-  // AI Search Bar Event Listener
-  const aiTrashSearch = document.getElementById("ai-trash-search");
-  if (aiTrashSearch) {
-    aiTrashSearch.onkeypress = (e) => {
-      if (e.key === "Enter") {
-        performAISearch(aiTrashSearch.value);
-      }
-    };
-  }
 
-  const btnSearchCloseModal = document.getElementById("btn-search-close-modal");
-  if (btnSearchCloseModal) {
-    btnSearchCloseModal.addEventListener("click", closeScanModal);
-  }
 
   // File Uploader Scan Action
   if (imageUpload) imageUpload.addEventListener("change", handleImageUpload);
@@ -1352,7 +1122,7 @@ async function captureAndScanCurrentFrame() {
 /**
  * Triggers modal display for scanned item
  */
-function triggerScanHit(itemKey, customScore, isSearchMode = false) {
+function triggerScanHit(itemKey, customScore) {
   isDetecting = false;
   
   const data = TRASH_DB[itemKey] || TRASH_DB["plastic_bottle"];
@@ -1369,19 +1139,6 @@ function triggerScanHit(itemKey, customScore, isSearchMode = false) {
     modalContent.classList.add(`bin-${data.bin}-theme`);
   }
 
-  // Toggle Confirm Dispose vs Close Button based on isSearchMode
-  const btnConfirmDisposeEl = document.getElementById("btn-confirm-dispose");
-  const btnSearchCloseModalEl = document.getElementById("btn-search-close-modal");
-  if (btnConfirmDisposeEl && btnSearchCloseModalEl) {
-    if (isSearchMode) {
-      btnConfirmDisposeEl.classList.add("hidden");
-      btnSearchCloseModalEl.classList.remove("hidden");
-    } else {
-      btnConfirmDisposeEl.classList.remove("hidden");
-      btnSearchCloseModalEl.classList.add("hidden");
-    }
-  }
-
   const isEn = window.currentLang === "en";
   const titleText = typeof data.title === "object" ? (isEn ? data.title.en : data.title.th) : data.title;
   const labelText = typeof data.label === "object" ? (isEn ? data.label.en : data.label.th) : data.label;
@@ -1391,74 +1148,34 @@ function triggerScanHit(itemKey, customScore, isSearchMode = false) {
   const rawScore = score || 0.95;
   const accuracyPercent = Math.min(99.6, Math.max(88.0, Math.round(rawScore * 1000) / 10)).toFixed(1);
 
-  const statusBadge = scanModal.querySelector(".scan-status-badge");
   const titleEl = document.getElementById("detected-item-title");
+  if (titleEl) {
+    titleEl.textContent = titleText;
+    titleEl.style.color = "";
+  }
+
+  const statusBadge = scanModal.querySelector(".scan-status-badge");
+  if (statusBadge) {
+    statusBadge.innerHTML = `<i data-lucide="check-circle-2"></i><span>สแกนสำเร็จ</span>`;
+    statusBadge.style.color = "";
+    statusBadge.style.backgroundColor = "";
+    statusBadge.style.borderColor = "";
+  }
+
   const binLabelEl = document.getElementById("bin-category-label");
+  if (binLabelEl) binLabelEl.textContent = labelText;
+  
   const accuracyEl = document.getElementById("detected-item-accuracy");
+  if (accuracyEl) {
+    accuracyEl.textContent = isEn ? `🎯 AI Accuracy: ${accuracyPercent}%` : `🎯 ความแม่นยำเอไอ: ${accuracyPercent}%`;
+    accuracyEl.style.color = "";
+    accuracyEl.style.backgroundColor = "";
+  }
+
   const binImg = document.getElementById("bin-image");
-
-  if (data.bin === "invalid") {
-    // 1. Red title text for gibberish/random input
-    if (titleEl) {
-      titleEl.textContent = titleText;
-      titleEl.style.color = "#ef4444";
-    }
-
-    // 2. Status badge to warning error
-    if (statusBadge) {
-      statusBadge.innerHTML = `<i data-lucide="alert-triangle"></i><span>ตรวจสอบไม่สำเร็จ</span>`;
-      statusBadge.style.color = "#ef4444";
-      statusBadge.style.backgroundColor = "rgba(239, 68, 68, 0.15)";
-      statusBadge.style.borderColor = "#ef4444";
-    }
-
-    // 3. Category Label warning
-    if (binLabelEl) {
-      binLabelEl.textContent = "ไม่สามารถตรวจสอบได้";
-    }
-
-    // 4. Accuracy Label to "ไม่สามารถตรวจสอบได้ กรุณาพิมพ์ให้ครบถ้วน"
-    if (accuracyEl) {
-      accuracyEl.textContent = "❌ ไม่สามารถตรวจสอบได้ กรุณาพิมพ์ให้ครบถ้วน";
-      accuracyEl.style.color = "#ef4444";
-      accuracyEl.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
-    }
-
-    // 5. Grayscale general bin icon fallback
-    if (binImg) {
-      binImg.src = `assets/general.png`;
-      binImg.style.filter = "grayscale(1) opacity(0.6)";
-    }
-
-    // 6. Enforce close button only, hide disposal points button
-    if (btnConfirmDisposeEl && btnSearchCloseModalEl) {
-      btnConfirmDisposeEl.classList.add("hidden");
-      btnSearchCloseModalEl.classList.remove("hidden");
-    }
-  } else {
-    // Restore normal settings
-    if (titleEl) {
-      titleEl.textContent = titleText;
-      titleEl.style.color = "";
-    }
-    if (statusBadge) {
-      statusBadge.innerHTML = `<i data-lucide="check-circle-2"></i><span>สแกนสำเร็จ</span>`;
-      statusBadge.style.color = "";
-      statusBadge.style.backgroundColor = "";
-      statusBadge.style.borderColor = "";
-    }
-    if (binLabelEl) {
-      binLabelEl.textContent = labelText;
-    }
-    if (accuracyEl) {
-      accuracyEl.textContent = isEn ? `🎯 AI Accuracy: ${accuracyPercent}%` : `🎯 ความแม่นยำเอไอ: ${accuracyPercent}%`;
-      accuracyEl.style.color = "";
-      accuracyEl.style.backgroundColor = "";
-    }
-    if (binImg) {
-      binImg.src = `assets/${data.bin}.png`;
-      binImg.style.filter = "";
-    }
+  if (binImg) {
+    binImg.src = `assets/${data.bin}.png`;
+    binImg.style.filter = "";
   }
   
   const rulesList = document.getElementById("bin-rules-list");
