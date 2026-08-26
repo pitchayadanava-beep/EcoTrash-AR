@@ -1630,11 +1630,13 @@ body {
 .modal-content.bin-organic-theme { border-color: var(--bin-organic); }
 .modal-content.bin-hazardous-theme { border-color: var(--bin-hazardous); }
 .modal-content.bin-general-theme { border-color: var(--bin-general); }
+.modal-content.bin-invalid-theme { border-color: #ef4444; }
 
 .bin-recycling-theme .bin-label { background-color: var(--bin-recycling); color: #000; }
 .bin-organic-theme .bin-label { background-color: var(--bin-organic); color: #000; }
 .bin-hazardous-theme .bin-label { background-color: var(--bin-hazardous); color: #000; }
 .bin-general-theme .bin-label { background-color: var(--bin-general); color: #000; }
+.bin-invalid-theme .bin-label { background-color: #ef4444; color: #fff; }
 
 /* Right: Guidelines */
 .rules-box {

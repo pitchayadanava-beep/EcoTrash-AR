@@ -318,12 +318,20 @@ function performAISearch(query) {
   
   const hasKeyword = (text, list) => list.some(word => text.includes(word));
 
+  let matchedKeyword = false;
   if (hasKeyword(cleanQuery, recKeywords)) {
     category = "recycling";
+    matchedKeyword = true;
   } else if (hasKeyword(cleanQuery, orgKeywords)) {
     category = "organic";
+    matchedKeyword = true;
   } else if (hasKeyword(cleanQuery, hazKeywords)) {
     category = "hazardous";
+    matchedKeyword = true;
+  }
+
+  if (!matchedKeyword) {
+    category = "invalid";
   }
 
   let rulesTh = [];
@@ -346,6 +354,19 @@ function performAISearch(query) {
     rulesEn = ["Do not crush or damage (flammable chemical leakage risk)", "Dispose exclusively at designated Hazardous points (Red Bin)", "Never mix with general household waste"];
     factTh = `ขยะกลุ่มนี้มีสารพิษโลหะหนักตกค้างสูงมาก การแยกทิ้งถังแดงทำให้กำจัดอย่างถูกหลักและปลอดภัย!`;
     factEn = `This contains heavy metals and toxic chemicals. Sorting in Red Bin ensures professional hazard safety!`;
+  } else if (category === "invalid") {
+    rulesTh = [
+      "ไม่สามารถตรวจสอบได้ กรุณาพิมพ์ให้ครบถ้วน",
+      "ลองพิมพ์คีย์เวิร์ดขยะภาษาไทยหรืออังกฤษใหม่ (เช่น ขวดพลาสติก, เปลือกผลไม้, แบตเตอรี่, ถุงกระดาษ)",
+      "หลีกเลี่ยงการสะกดผิดหรือป้อนตัวอักษรสุ่มที่ไม่มีความหมาย"
+    ];
+    rulesEn = [
+      "Cannot verify. Please type completely and correctly.",
+      "Try searching using standard waste names (e.g. plastic bottle, banana peel, dry battery, box)",
+      "Avoid spelling typos or random keyboard gibberish"
+    ];
+    factTh = `เอไอคัดแยกขยะอัจฉริยะล้มเหลวในการตีความคำค้นหาของคุณ กรุณาตรวจสอบตัวสะกดใหม่อีกครั้ง`;
+    factEn = `The smart AI classifier was unable to map this search term. Please check your spelling and try again.`;
   } else {
     rulesTh = ["แยกขยะที่รีไซเคิลไม่ได้หรือเปื้อนเปรอะสิ่งสกปรกหนักทิ้งถังสีเทา", "มัดถุงให้แน่นและมิดชิดเพื่อสุขอนามัยที่ดี", "ทิ้งถังขยะทั่วไป (สีเทา) เพื่อนำไปฝังกลบหรือผลิตพลังงานความร้อน"];
     rulesEn = ["Separate non-recyclable or heavily soiled waste into Gray Bin", "Tie garbage bags securely for hygiene safety", "Dispose in Gray General Bin for professional landfill or incineration"];
@@ -359,8 +380,8 @@ function performAISearch(query) {
     title: { th: itemTh, en: itemEn },
     bin: category,
     label: {
-      th: category === "recycling" ? "ขยะรีไซเคิล (สีน้ำเงิน)" : category === "organic" ? "ขยะอินทรีย์ย่อยสลาย (สีเขียว)" : category === "hazardous" ? "ขยะอันตราย (สีแดง)" : "ขยะทั่วไป (สีเทา)",
-      en: category === "recycling" ? "Recyclable Waste (Blue Bin)" : category === "organic" ? "Organic Waste (Green Bin)" : category === "hazardous" ? "Hazardous Waste (Red Bin)" : "General Waste (Gray Bin)"
+      th: category === "recycling" ? "ขยะรีไซเคิล (สีน้ำเงิน)" : category === "organic" ? "ขยะอินทรีย์ย่อยสลาย (สีเขียว)" : category === "hazardous" ? "ขยะอันตราย (สีแดง)" : category === "invalid" ? "ไม่สามารถตรวจสอบได้" : "ขยะทั่วไป (สีเทา)",
+      en: category === "recycling" ? "Recyclable Waste (Blue Bin)" : category === "organic" ? "Organic Waste (Green Bin)" : category === "hazardous" ? "Hazardous Waste (Red Bin)" : category === "invalid" ? "Unverifiable" : "General Waste (Gray Bin)"
     },
     rules: { th: rulesTh, en: rulesEn },
     fact: { th: factTh, en: factEn }
@@ -1374,19 +1395,75 @@ function triggerScanHit(itemKey, customScore, isSearchMode = false) {
   const rawScore = score || 0.95;
   const accuracyPercent = Math.min(99.6, Math.max(88.0, Math.round(rawScore * 1000) / 10)).toFixed(1);
 
+  const statusBadge = scanModal.querySelector(".scan-status-badge");
   const titleEl = document.getElementById("detected-item-title");
-  if (titleEl) titleEl.textContent = titleText;
-
   const binLabelEl = document.getElementById("bin-category-label");
-  if (binLabelEl) binLabelEl.textContent = labelText;
-  
   const accuracyEl = document.getElementById("detected-item-accuracy");
-  if (accuracyEl) {
-    accuracyEl.textContent = isEn ? `🎯 AI Accuracy: ${accuracyPercent}%` : `🎯 ความแม่นยำเอไอ: ${accuracyPercent}%`;
-  }
-
   const binImg = document.getElementById("bin-image");
-  if (binImg) binImg.src = `assets/${data.bin}.png`;
+
+  if (data.bin === "invalid") {
+    // 1. Red title text for gibberish/random input
+    if (titleEl) {
+      titleEl.textContent = titleText;
+      titleEl.style.color = "#ef4444";
+    }
+
+    // 2. Status badge to warning error
+    if (statusBadge) {
+      statusBadge.innerHTML = `<i data-lucide="alert-triangle"></i><span>ตรวจสอบไม่สำเร็จ</span>`;
+      statusBadge.style.color = "#ef4444";
+      statusBadge.style.backgroundColor = "rgba(239, 68, 68, 0.15)";
+      statusBadge.style.borderColor = "#ef4444";
+    }
+
+    // 3. Category Label warning
+    if (binLabelEl) {
+      binLabelEl.textContent = "ไม่สามารถตรวจสอบได้";
+    }
+
+    // 4. Accuracy Label to "ไม่สามารถตรวจสอบได้ กรุณาพิมพ์ให้ครบถ้วน"
+    if (accuracyEl) {
+      accuracyEl.textContent = "❌ ไม่สามารถตรวจสอบได้ กรุณาพิมพ์ให้ครบถ้วน";
+      accuracyEl.style.color = "#ef4444";
+      accuracyEl.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
+    }
+
+    // 5. Grayscale general bin icon fallback
+    if (binImg) {
+      binImg.src = `assets/general.png`;
+      binImg.style.filter = "grayscale(1) opacity(0.6)";
+    }
+
+    // 6. Enforce close button only, hide disposal points button
+    if (btnConfirmDisposeEl && btnSearchCloseModalEl) {
+      btnConfirmDisposeEl.classList.add("hidden");
+      btnSearchCloseModalEl.classList.remove("hidden");
+    }
+  } else {
+    // Restore normal settings
+    if (titleEl) {
+      titleEl.textContent = titleText;
+      titleEl.style.color = "";
+    }
+    if (statusBadge) {
+      statusBadge.innerHTML = `<i data-lucide="check-circle-2"></i><span>สแกนสำเร็จ</span>`;
+      statusBadge.style.color = "";
+      statusBadge.style.backgroundColor = "";
+      statusBadge.style.borderColor = "";
+    }
+    if (binLabelEl) {
+      binLabelEl.textContent = labelText;
+    }
+    if (accuracyEl) {
+      accuracyEl.textContent = isEn ? `🎯 AI Accuracy: ${accuracyPercent}%` : `🎯 ความแม่นยำเอไอ: ${accuracyPercent}%`;
+      accuracyEl.style.color = "";
+      accuracyEl.style.backgroundColor = "";
+    }
+    if (binImg) {
+      binImg.src = `assets/${data.bin}.png`;
+      binImg.style.filter = "";
+    }
+  }
   
   const rulesList = document.getElementById("bin-rules-list");
   if (rulesList) {
